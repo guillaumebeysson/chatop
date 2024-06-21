@@ -47,6 +47,11 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/login")
+    public String loginGet() {
+        return "Login page";
+    }
+
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest registerRequest) {
         User user = new User();
@@ -55,6 +60,11 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userRepository.save(user);
         return "User registered successfully";
+    }
+
+    @GetMapping("/register")
+    public String registerGet() {
+        return "Register page";
     }
 
     @GetMapping("/me")
