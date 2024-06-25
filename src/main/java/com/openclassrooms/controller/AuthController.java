@@ -4,6 +4,8 @@ import com.openclassrooms.service.CustomUserDetailsService;
 import com.openclassrooms.service.JwtService;
 import com.openclassrooms.entity.User;
 import com.openclassrooms.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +17,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Authentication", description = "Endpoints for user authentication and registration")
 public class AuthController {
 
     @Autowired
@@ -34,6 +38,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "Authenticate a user and return a JWT token")
     @PostMapping("/login")
     public String login(@RequestBody AuthRequest authRequest) {
         try {
@@ -47,11 +52,13 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "Get login page")
     @GetMapping("/login")
     public String loginGet() {
         return "Login page";
     }
 
+    @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest registerRequest) {
         User user = new User();
@@ -62,11 +69,13 @@ public class AuthController {
         return "User registered successfully";
     }
 
+    @Operation(summary = "Get register page")
     @GetMapping("/register")
     public String registerGet() {
         return "Register page";
     }
 
+    @Operation(summary = "Get the current authenticated user")
     @GetMapping("/me")
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

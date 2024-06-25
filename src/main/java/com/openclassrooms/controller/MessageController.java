@@ -6,6 +6,8 @@ import com.openclassrooms.entity.User;
 import com.openclassrooms.repository.MessageRepository;
 import com.openclassrooms.repository.RentalRepository;
 import com.openclassrooms.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Message", description = "Endpoints for managing messages")
 public class MessageController {
 
     @Autowired
@@ -30,6 +33,7 @@ public class MessageController {
     @Autowired
     private UserRepository userRepository;
 
+    @Operation(summary = "Send a message to a rental")
     @PostMapping("/messages")
     public String sendMessage(@RequestBody MessageRequest messageRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

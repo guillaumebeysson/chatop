@@ -24,7 +24,13 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/login",
-            "/api/auth/register"
+            "/api/auth/register",
+            // Swagger UI endpoints
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/webjars/**"
     };
 
     @Autowired
