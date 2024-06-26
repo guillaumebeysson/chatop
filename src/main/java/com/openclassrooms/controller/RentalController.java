@@ -1,7 +1,7 @@
 package com.openclassrooms.controller;
 
 import com.openclassrooms.DTO.RentalRequest;
-import com.openclassrooms.DTO.RentalResponse;
+import com.openclassrooms.entity.Rental;
 import com.openclassrooms.service.RentalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,13 +23,13 @@ public class RentalController {
 
     @Operation(summary = "Get all rentals")
     @GetMapping
-    public List<RentalResponse> getAllRentals() {
+    public List<Rental> getAllRentals() {
         return rentalService.getAllRentals();
     }
 
     @Operation(summary = "Get a rental by ID")
     @GetMapping("/{id}")
-    public RentalResponse getRentalById(@PathVariable Long id) {
+    public Rental getRentalById(@PathVariable Long id) {
         return rentalService.getRentalById(id);
     }
 
@@ -51,4 +51,3 @@ public class RentalController {
         return ResponseEntity.ok(response);
     }
 }
-
