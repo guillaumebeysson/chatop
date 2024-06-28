@@ -10,5 +10,4 @@ public class RentalRequest {
     private Float price;
     private MultipartFile picture;
     private String description;
-    private String pictureUrl;
 }

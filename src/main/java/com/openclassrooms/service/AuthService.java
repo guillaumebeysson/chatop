@@ -59,7 +59,7 @@ public class AuthService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email);
-        return new UserResponse(user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
+        return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
     }
 
 }

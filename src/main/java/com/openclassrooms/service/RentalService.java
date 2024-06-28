@@ -30,8 +30,9 @@ public class RentalService {
                 .collect(Collectors.toList());
     }
 
-    public Rental getRentalById(Long id) {
-        return rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
+    public RentalResponse getRentalById(Long id) {
+        Rental rental = rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
+        return convertToResponse(rental);
     }
 
     public void createRental(RentalRequest request, User owner) throws IOException {
@@ -49,13 +50,15 @@ public class RentalService {
 
     public void updateRental(Long id, RentalRequest request, User owner) throws IOException {
         Rental rental = rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
-        String pictureUrl = fileService.saveFile(request.getPicture());
 
         rental.setName(request.getName());
         rental.setSurface(request.getSurface());
         rental.setPrice(request.getPrice());
-        rental.setPicture(pictureUrl);
         rental.setDescription(request.getDescription());
+        if (request.getPicture() != null && !request.getPicture().isEmpty()) {
+            String pictureUrl = fileService.saveFile(request.getPicture());
+            rental.setPicture(pictureUrl);
+        }
         rental.setOwner(owner);
         rentalRepository.save(rental);
     }

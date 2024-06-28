@@ -42,8 +42,9 @@ public class RentalController {
 
     @Operation(summary = "Get a rental by ID")
     @GetMapping("/{id}")
-    public Rental getRentalById(@PathVariable Long id) {
-        return rentalService.getRentalById(id);
+    public ResponseEntity<RentalResponse> getRentalById(@PathVariable Long id) {
+        RentalResponse rental = rentalService.getRentalById(id);
+        return ResponseEntity.ok(rental);
     }
 
     @Operation(summary = "Create a new rental")
@@ -79,7 +80,7 @@ public class RentalController {
             @RequestParam("name") String name,
             @RequestParam("surface") Float surface,
             @RequestParam("price") Float price,
-            @RequestParam("picture") MultipartFile picture,
+            @RequestParam(value = "picture", required = false) MultipartFile picture,
             @RequestParam("description") String description) throws IOException {
 
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
@@ -89,8 +90,11 @@ public class RentalController {
         request.setName(name);
         request.setSurface(surface);
         request.setPrice(price);
-        request.setPicture(picture);
         request.setDescription(description);
+
+        if (picture != null) {
+            request.setPicture(picture);
+        }
 
         rentalService.updateRental(id, request, user);
 
