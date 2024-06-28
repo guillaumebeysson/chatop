@@ -1,7 +1,6 @@
 package com.openclassrooms.configuration;
 
 import com.openclassrooms.repository.UserRepository;
-import com.openclassrooms.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,8 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/swagger-resources/**",
-            "/webjars/**"
+            "/webjars/**",
+            "/api/images/**"
     };
 
     @Autowired

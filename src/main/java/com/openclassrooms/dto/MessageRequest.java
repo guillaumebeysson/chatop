@@ -1,9 +1,10 @@
-package com.openclassrooms.DTO;
+package com.openclassrooms.dto;
 
 import lombok.Data;
 
 @Data
 public class MessageRequest {
-    private Integer rentalId;
+    private Long rental_id;
+    private Long user_id;
     private String message;
 }

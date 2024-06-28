@@ -1,8 +1,9 @@
 package com.openclassrooms.service;
 
-import com.openclassrooms.DTO.AuthRequest;
-import com.openclassrooms.DTO.RegisterRequest;
-import com.openclassrooms.DTO.UserResponse;
+import com.openclassrooms.dto.AuthRequest;
+import com.openclassrooms.dto.RegisterRequest;
+import com.openclassrooms.dto.TokenResponse;
+import com.openclassrooms.dto.UserResponse;
 import com.openclassrooms.entity.User;
 import com.openclassrooms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,26 +33,33 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String authenticateUser(AuthRequest authRequest) {
+    public TokenResponse authenticateUser(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(authRequest.getEmail());
-        return jwtService.generateToken(userDetails);
+        String token = jwtService.generateToken(userDetails);
+        return new TokenResponse(token);
     }
 
-    public void registerUser(RegisterRequest registerRequest) {
+    public TokenResponse registerUser(RegisterRequest registerRequest) {
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setName(registerRequest.getName());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         userRepository.save(user);
+
+        AuthRequest authRequest = new AuthRequest();
+        authRequest.setEmail(registerRequest.getEmail());
+        authRequest.setPassword(registerRequest.getPassword());
+        return authenticateUser(authRequest);
     }
 
     public UserResponse getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email);
-        return new UserResponse(user.getEmail(), user.getName());
+        return new UserResponse(user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
     }
+
 }

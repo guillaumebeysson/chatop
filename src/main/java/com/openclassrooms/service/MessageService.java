@@ -1,20 +1,20 @@
 package com.openclassrooms.service;
 
-import com.openclassrooms.DTO.MessageRequest;
+import com.openclassrooms.dto.MessageRequest;
 import com.openclassrooms.entity.Message;
 import com.openclassrooms.entity.Rental;
 import com.openclassrooms.entity.User;
 import com.openclassrooms.repository.MessageRepository;
 import com.openclassrooms.repository.RentalRepository;
 import com.openclassrooms.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
+@Slf4j
 public class MessageService {
 
     @Autowired
@@ -27,12 +27,22 @@ public class MessageService {
     private UserRepository userRepository;
 
     public void sendMessage(MessageRequest messageRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
-        User user = userRepository.findByEmail(userEmail);
+        if (messageRequest.getUser_id() == null) {
+            throw new IllegalArgumentException("User ID must not be null");
+        }
+
+        if (messageRequest.getRental_id() == null) {
+            throw new IllegalArgumentException("Rental ID must not be null");
+        }
+
+        log.info("User ID: " + messageRequest.getUser_id());
+        log.info("Rental ID: " + messageRequest.getRental_id());
+
+        User user = userRepository.findById(messageRequest.getUser_id())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Rental rental = rentalRepository
-                .findById(Long.valueOf(messageRequest.getRentalId()))
+                .findById(messageRequest.getRental_id())
                 .orElseThrow(() -> new RuntimeException("Rental not found"));
 
         Message message = new Message();
@@ -45,4 +55,3 @@ public class MessageService {
         messageRepository.save(message);
     }
 }
-
