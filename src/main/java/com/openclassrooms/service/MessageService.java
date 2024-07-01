@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-@Slf4j
 public class MessageService {
 
     @Autowired
@@ -34,9 +33,6 @@ public class MessageService {
         if (messageRequest.getRental_id() == null) {
             throw new IllegalArgumentException("Rental ID must not be null");
         }
-
-        log.info("User ID: " + messageRequest.getUser_id());
-        log.info("Rental ID: " + messageRequest.getRental_id());
 
         User user = userRepository.findById(messageRequest.getUser_id())
                 .orElseThrow(() -> new RuntimeException("User not found"));

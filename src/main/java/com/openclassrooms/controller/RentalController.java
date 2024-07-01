@@ -1,5 +1,6 @@
 package com.openclassrooms.controller;
 
+import com.openclassrooms.dto.RentalListResponse;
 import com.openclassrooms.dto.RentalRequest;
 import com.openclassrooms.dto.RentalResponse;
 import com.openclassrooms.entity.Rental;
@@ -33,10 +34,9 @@ public class RentalController {
 
     @Operation(summary = "Get all rentals")
     @GetMapping
-    public ResponseEntity<Map<String, List<RentalResponse>>> getAllRentals() {
+    public ResponseEntity<RentalListResponse> getAllRentals() {
         List<RentalResponse> rentals = rentalService.getAllRentals();
-        Map<String, List<RentalResponse>> response = new HashMap<>();
-        response.put("rentals", rentals);
+        RentalListResponse response = new RentalListResponse(rentals);
         return ResponseEntity.ok(response);
     }
 
@@ -49,7 +49,7 @@ public class RentalController {
 
     @Operation(summary = "Create a new rental")
     @PostMapping
-    public ResponseEntity<Map<String, String>> createRental(
+    public ResponseEntity<String> createRental(
             @RequestParam("name") String name,
             @RequestParam("surface") Float surface,
             @RequestParam("price") Float price,
@@ -68,14 +68,12 @@ public class RentalController {
 
         rentalService.createRental(request, user);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Rental created!");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("{\"message\": \"Rental created!\"}");
     }
 
     @Operation(summary = "Update a rental by ID")
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, String>> updateRental(
+    public ResponseEntity<String> updateRental(
             @PathVariable Long id,
             @RequestParam("name") String name,
             @RequestParam("surface") Float surface,
@@ -98,8 +96,6 @@ public class RentalController {
 
         rentalService.updateRental(id, request, user);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Rental updated!");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("{\"message\": \"Rental updated!\"}");
     }
 }

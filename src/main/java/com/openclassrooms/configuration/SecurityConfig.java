@@ -24,7 +24,6 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/login",
             "/api/auth/register",
-            // Swagger UI endpoints
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/swagger-ui/**",
@@ -43,13 +42,14 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
-    // @Autowired
-    // private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated())
@@ -66,24 +66,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //@Autowired
-    //public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    //    auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-   // }
-
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            return userRepository.findByEmail(username);
-                    //.orElseThrow(() -> new UsernameNotFoundException("user not found"));
-        };
+        return username -> userRepository.findByEmail(username);
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-        authProvider.setUserDetailsService((userDetailsService()));
+        authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
