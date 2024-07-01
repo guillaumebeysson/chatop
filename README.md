@@ -1,6 +1,6 @@
 # chatop
 
-chatop is n application for managing vacation home reservations, offering users the ability to book accommodation, list their own property for rent and send message if you are interested by a rent.
+chatop is an application for managing vacation home reservations, offering users the ability to book accommodation, list their own property for rent and send message if you are interested by a rent.
 
 ## The Front-end uses:
 Angular
@@ -24,15 +24,14 @@ Getting started
 
 [](https://github.com/CodeByGaetan/ChaTop#back-end)
 
--   Open your IDE (VS Code, Eclipse, etc.) in the directory : `/ChaTop/ChaTopApi`
+-   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) in the directory : `/ChaTop`
 -   Run `mvn spring-boot:run` to launch the back-end in developpment mode
--   Or run `mvn package` to build the project and then run `java -jar target/api-0.0.1-SNAPSHOT.jar` to launch the built package.
 
 ### Front-end
 
 [](https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring)
 
--   Open your IDE (VS Code, Eclipse, etc.) in the directory : `/ChaTop/ChaTopWeb`
+-   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) in the directory : `/ChaTop`
 -   Run `npm install` to install the dependencies
 -   Run `ng serve` to start the front-end development server
 -   To use the app, navigate to <http://localhost:4200/>
