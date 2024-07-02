@@ -30,6 +30,11 @@ public class MessageController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Envoie un message à une location
+     * @param messageRequest requête de message
+     * @return réponse de message
+     */
     @Operation(summary = "Send a message to a rental")
     @PostMapping("/messages")
     public ResponseEntity<MessageResponse> sendMessage(@RequestBody MessageRequest messageRequest) {

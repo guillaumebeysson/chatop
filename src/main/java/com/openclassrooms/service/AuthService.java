@@ -33,6 +33,11 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Authentifie un utilisateur et renvoie un token.
+     * @param authRequest les informations d'authentification de l'utilisateur
+     * @return le token d'authentification
+     */
     public TokenResponse authenticateUser(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
@@ -42,6 +47,11 @@ public class AuthService {
         return new TokenResponse(token);
     }
 
+    /**
+     * Enregistre un utilisateur et le connecte.
+     * @param registerRequest les informations d'inscription de l'utilisateur
+     * @return le token d'authentification
+     */
     public TokenResponse registerUser(RegisterRequest registerRequest) {
         User user = new User();
         user.setEmail(registerRequest.getEmail());
@@ -55,6 +65,10 @@ public class AuthService {
         return authenticateUser(authRequest);
     }
 
+    /**
+     * Récupère l'utilisateur actuellement connecté.
+     * @return les informations de l'utilisateur
+     */
     public UserResponse getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();

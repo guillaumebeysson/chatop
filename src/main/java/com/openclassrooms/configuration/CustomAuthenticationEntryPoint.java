@@ -12,6 +12,12 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    /**
+     * Méthode appelée lorsqu'une exception d'authentification est levée.
+     * @param request La requête
+     * @param response La réponse
+     * @param authException L'exception d'authentification
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized: " + authException.getMessage());

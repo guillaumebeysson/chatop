@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Réponse contenant les informations d'un utilisateur.
+ */
 @Data
 public class UserResponse {
     private Long id;

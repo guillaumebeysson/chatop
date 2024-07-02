@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Réponse contenant les informations d'une location.
+ */
 @Data
 public class RentalResponse {
     private Long id;

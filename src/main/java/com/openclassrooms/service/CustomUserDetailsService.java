@@ -16,6 +16,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Charge un utilisateur à partir de son email.
+     * @param email l'email de l'utilisateur
+     * @return les détails de l'utilisateur
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);

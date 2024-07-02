@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Contrôleur pour la gestion des fichiers (images)
+ */
 @RestController
 @RequestMapping("/api/images")
 public class FileController {
 
     private final Path uploadDir = Paths.get("images");
 
+    /**
+     * Récupère un fichier par son nom
+     * @param fileName nom du fichier
+     * @return fichier
+     */
     @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String fileName) {
         try {

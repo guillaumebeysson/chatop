@@ -16,6 +16,11 @@ public class FileService {
 
     private final String uploadDir = "./images";
 
+    /**
+     * Sauvegarde un fichier dans le répertoire d'upload.
+     * @param file le fichier à sauvegarder
+     * @return l'URL du fichier sauvegardé
+     */
     public String saveFile(MultipartFile file) throws IOException {
         String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
         String fileExtension = getFileExtension(originalFileName);
@@ -33,6 +38,11 @@ public class FileService {
         return fileDownloadUri;
     }
 
+    /**
+     * Récupère l'extension d'un fichier.
+     * @param fileName le nom du fichier
+     * @return l'extension du fichier
+     */
     private String getFileExtension(String fileName) {
         if (fileName == null) {
             return "";

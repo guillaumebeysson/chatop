@@ -19,6 +19,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Récupère un utilisateur par son ID
+     * @param id ID de l'utilisateur
+     * @return utilisateur
+     */
     @Operation(summary = "Get a user by id")
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {

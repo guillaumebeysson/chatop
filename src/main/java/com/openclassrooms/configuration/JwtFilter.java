@@ -28,6 +28,12 @@ public class JwtFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
 
+    /**
+     * Méthode utilisée pour filtrer les requêtes entrantes et sortantes.
+     * @param request La requête entrante
+     * @param response  La réponse sortante
+     * @param filterChain Le filtre de chaîne
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,

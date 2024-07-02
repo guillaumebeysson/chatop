@@ -20,6 +20,11 @@ public class JwtService {
 
     private static final String SECRET_KEY = "28482B4D6251655468576D5A7134743777217A25432646294A404E635266556A";
 
+    /**
+     * Extrait les revendications du token.
+     * @param token le token
+     * @return les revendications
+     */
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
@@ -29,20 +34,42 @@ public class JwtService {
                 .getBody();
     }
 
+    /**
+     * Récupère la clé secrète pour signer le token.
+     * @return la clé secrète
+     */
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    /**
+     * Extrait une revendication du token.
+     * @param token le token
+     * @param claimsResolver la fonction de résolution des revendications
+     * @param <T> le type de la revendication
+     * @return la revendication
+     */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
+    /**
+     * Extrait le nom d'utilisateur du token.
+     * @param token le token
+     * @return le nom d'utilisateur
+     */
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Génère un token à partir des revendications et des détails de l'utilisateur.
+     * @param extractClaims les revendications
+     * @param userDetails les détails de l'utilisateur
+     * @return le token
+     */
     public String generateToken(Map<String, Objects> extractClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
@@ -54,19 +81,40 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * Génère un token à partir des détails de l'utilisateur.
+     * @param userDetails les détails de l'utilisateur
+     * @return le token
+     */
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    /**
+     * Vérifie si le token est valide.
+     * @param token le token
+     * @param userDetails les détails de l'utilisateur
+     * @return true si le token est valide, false sinon
+     */
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUserName(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
+    /**
+     * Vérifie si le token est expiré.
+     * @param token le token
+     * @return true si le token est expiré, false sinon
+     */
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
+    /**
+     * Extrait la date d'expiration du token.
+     * @param token le token
+     * @return la date d'expiration
+     */
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }

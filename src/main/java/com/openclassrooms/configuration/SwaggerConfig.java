@@ -17,6 +17,10 @@ public class SwaggerConfig {
 
     // Swagger link http://localhost:8080/swagger-ui/index.html
 
+    /**
+     * Configuration de l'API Swagger
+     * @return La configuration de l'API Swagger
+     */
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
@@ -38,6 +42,10 @@ public class SwaggerConfig {
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
     }
 
+    /**
+     * Configuration de l'API Swagger pour les endpoints publics
+     * @return La configuration de l'API Swagger pour les endpoints publics
+     */
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()

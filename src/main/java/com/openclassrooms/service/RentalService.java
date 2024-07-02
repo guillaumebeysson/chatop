@@ -24,17 +24,31 @@ public class RentalService {
     @Autowired
     private FileService fileService;
 
+    /**
+     * Récupère toutes les locations.
+     * @return la liste des locations
+     */
     public List<RentalResponse> getAllRentals() {
         return rentalRepository.findAll().stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Récupère la location par son id.
+     * @param id l'id de la location
+     * @return la location
+     */
     public RentalResponse getRentalById(Long id) {
         Rental rental = rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
         return convertToResponse(rental);
     }
 
+    /**
+     * Crée une location.
+     * @param request les informations de la location
+     * @param owner l'utilisateur propriétaire de la location
+     */
     public void createRental(RentalRequest request, User owner) throws IOException {
         String pictureUrl = fileService.saveFile(request.getPicture());
 
@@ -48,6 +62,12 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
+    /**
+     * Met à jour une location.
+     * @param id l'id de la location
+     * @param request les informations de la location
+     * @param owner l'utilisateur propriétaire de la location
+     */
     public void updateRental(Long id, RentalRequest request, User owner) throws IOException {
         Rental rental = rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
 
@@ -63,6 +83,11 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
+    /**
+     * Convertit un objet Rental en objet RentalResponse.
+     * @param rental la location
+     * @return location convertie en objet RentalResponse
+     */
     private RentalResponse convertToResponse(Rental rental) {
         RentalResponse response = new RentalResponse();
         response.setId(rental.getId());

@@ -25,6 +25,10 @@ public class MessageService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Envoie un message pour une location.
+     * @param messageRequest les informations du message
+     */
     public void sendMessage(MessageRequest messageRequest) {
         if (messageRequest.getUser_id() == null) {
             throw new IllegalArgumentException("User ID must not be null");

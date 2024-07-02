@@ -21,6 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Liste des URI autorisées sans authentification
+     */
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/login",
             "/api/auth/register",
@@ -45,6 +48,11 @@ public class SecurityConfig {
     @Autowired
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
+    /**
+     * Configuration de la sécurité
+     * @param http La configuration HTTP
+     * @return La configuration de la sécurité
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -61,16 +69,31 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Encodage du mot de passe
+     * @return mot de passe encodé
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Cette méthode retourne une instance de UserDetailsService qui permet de charger les détails
+       d'un utilisateur à partir de son adresse e-mail. Le service recherche l'utilisateur en utilisant
+       le repository des utilisateurs (userRepository).
+     * @return charge les détails de l'utilisateur par adresse e-mail
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username);
     }
 
+    /**
+     * Valider les informations d'authentification d'un utilisateur en utilisant le service
+       UserDetailsService et l'encodage du mot de passe.
+     * @return Un AuthenticationProvider configuré pour l'authentification des utilisateurs.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -79,6 +102,11 @@ public class SecurityConfig {
         return authProvider;
     }
 
+    /**
+     * Configuration de l'authentification
+     * @param config La configuration de l'authentification
+     * @return L'instance d'AuthenticationManager utilisée pour gérer l'authentification des utilisateurs.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

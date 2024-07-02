@@ -19,18 +19,32 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    /**
+     * Authentifie un utilisateur et retourne un token JWT
+     * @param authRequest requête d'authentification
+     * @return token JWT
+     */
     @Operation(summary = "Authenticate a user and return a JWT token")
     @PostMapping("/login")
     public TokenResponse login(@RequestBody AuthRequest authRequest) {
         return authService.authenticateUser(authRequest);
     }
 
+    /**
+     * Enregistre un nouvel utilisateur
+     * @param registerRequest requête d'enregistrement
+     * @return token JWT
+     */
     @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public TokenResponse register(@RequestBody RegisterRequest registerRequest) {
         return authService.registerUser(registerRequest);
     }
 
+    /**
+     * Récupère l'utilisateur actuellement authentifié
+     * @return utilisateur actuel
+     */
     @Operation(summary = "Get the current authenticated user")
     @GetMapping("/me")
     public UserResponse getCurrentUser() {
