@@ -18,7 +18,7 @@ Getting started
 
 ### Clone the project
 
-[](https://github.com/guillaumebeysson/chatop.git)
+https://github.com/guillaumebeysson/chatop.git
 
 ### Back-end
 
