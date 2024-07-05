@@ -46,7 +46,7 @@ MySQL Database install :
 -   From this app root directory, launch and connect to mySQL
 -   Run `CREATE DATABASE chatop;` to create the database
 -   Run `USE chatop;` to use the newly created database
--   Run `SOURCE script_bdd.sql;` to create the database tables
+-   Copy script.sql and execute request; to create the database tables
 
 Ressources
 ----------
