@@ -16,21 +16,17 @@ Getting started
 
 [](https://github.com/guillaumebeysson/chatop)
 
-### Clone the project
-
-https://github.com/guillaumebeysson/chatop.git
+### Clone projects
 
 ### Back-end
 
-[](https://github.com/CodeByGaetan/ChaTop#back-end)
-
+-   Clone the project: https://github.com/guillaumebeysson/chatop.git
 -   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) in the directory : `/ChaTop`
 -   Run `mvn spring-boot:run` to launch the back-end in developpment mode
 
 ### Front-end
 
-[](https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring)
-
+-   Clone the project: https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring
 -   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) in the directory : `/ChaTop`
 -   Run `npm install` to install the dependencies
 -   Run `ng serve` to start the front-end development server
@@ -38,9 +34,9 @@ https://github.com/guillaumebeysson/chatop.git
 
 ### Database
 
-[](https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring)
-
 Copy script SQL:
+
+In the project: https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring
 
 > /ressources/sql/script.sql
 
