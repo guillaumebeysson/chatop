@@ -4,6 +4,7 @@ import com.openclassrooms.dto.AuthRequest;
 import com.openclassrooms.dto.RegisterRequest;
 import com.openclassrooms.dto.TokenResponse;
 import com.openclassrooms.dto.UserResponse;
+import com.openclassrooms.entity.User;
 import com.openclassrooms.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +28,7 @@ public class AuthController {
     @Operation(summary = "Authenticate a user and return a JWT token")
     @PostMapping("/login")
     public TokenResponse login(@RequestBody AuthRequest authRequest) {
-        return authService.authenticateUser(authRequest);
+        return new TokenResponse(authService.authenticateUser(authRequest));
     }
 
     /**
@@ -38,7 +39,7 @@ public class AuthController {
     @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public TokenResponse register(@RequestBody RegisterRequest registerRequest) {
-        return authService.registerUser(registerRequest);
+        return new TokenResponse(authService.registerUser(registerRequest));
     }
 
     /**
@@ -48,7 +49,8 @@ public class AuthController {
     @Operation(summary = "Get the current authenticated user")
     @GetMapping("/me")
     public UserResponse getCurrentUser() {
-        return authService.getCurrentUser();
+        User user = authService.getCurrentUser();
+        return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
     }
 }
 

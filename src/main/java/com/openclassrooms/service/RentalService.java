@@ -28,10 +28,8 @@ public class RentalService {
      * Récupère toutes les locations.
      * @return la liste des locations
      */
-    public List<RentalResponse> getAllRentals() {
-        return rentalRepository.findAll().stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
+    public List<Rental> getAllRentals() {
+        return rentalRepository.findAll();
     }
 
     /**
@@ -39,9 +37,8 @@ public class RentalService {
      * @param id l'id de la location
      * @return la location
      */
-    public RentalResponse getRentalById(Long id) {
-        Rental rental = rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
-        return convertToResponse(rental);
+    public Rental getRentalById(Long id) {
+        return rentalRepository.findById(id).orElseThrow(() -> new RuntimeException("Rental not found"));
     }
 
     /**
@@ -83,22 +80,4 @@ public class RentalService {
         rentalRepository.save(rental);
     }
 
-    /**
-     * Convertit un objet Rental en objet RentalResponse.
-     * @param rental la location
-     * @return location convertie en objet RentalResponse
-     */
-    private RentalResponse convertToResponse(Rental rental) {
-        RentalResponse response = new RentalResponse();
-        response.setId(rental.getId());
-        response.setName(rental.getName());
-        response.setSurface(rental.getSurface());
-        response.setPrice(rental.getPrice());
-        response.setPicture(rental.getPicture());
-        response.setDescription(rental.getDescription());
-        response.setOwner_id(rental.getOwner().getId());
-        response.setCreated_at(rental.getCreated_at());
-        response.setUpdated_at(rental.getUpdated_at());
-        return response;
-    }
 }

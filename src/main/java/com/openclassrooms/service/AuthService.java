@@ -38,13 +38,12 @@ public class AuthService {
      * @param authRequest les informations d'authentification de l'utilisateur
      * @return le token d'authentification
      */
-    public TokenResponse authenticateUser(AuthRequest authRequest) {
+    public String authenticateUser(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(authRequest.getEmail());
-        String token = jwtService.generateToken(userDetails);
-        return new TokenResponse(token);
+        return jwtService.generateToken(userDetails);
     }
 
     /**
@@ -52,7 +51,7 @@ public class AuthService {
      * @param registerRequest les informations d'inscription de l'utilisateur
      * @return le token d'authentification
      */
-    public TokenResponse registerUser(RegisterRequest registerRequest) {
+    public String registerUser(RegisterRequest registerRequest) {
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setName(registerRequest.getName());
@@ -69,11 +68,10 @@ public class AuthService {
      * Récupère l'utilisateur actuellement connecté.
      * @return les informations de l'utilisateur
      */
-    public UserResponse getCurrentUser() {
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        User user = userRepository.findByEmail(email);
-        return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
+        return userRepository.findByEmail(email);
     }
 
 }

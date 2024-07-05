@@ -3,6 +3,7 @@ package com.openclassrooms.controller;
 import com.openclassrooms.dto.RentalListResponse;
 import com.openclassrooms.dto.RentalRequest;
 import com.openclassrooms.dto.RentalResponse;
+import com.openclassrooms.entity.Rental;
 import com.openclassrooms.entity.User;
 import com.openclassrooms.service.FileService;
 import com.openclassrooms.service.RentalService;
@@ -36,8 +37,9 @@ public class RentalController {
     @Operation(summary = "Get all rentals")
     @GetMapping
     public ResponseEntity<RentalListResponse> getAllRentals() {
-        List<RentalResponse> rentals = rentalService.getAllRentals();
-        RentalListResponse response = new RentalListResponse(rentals);
+        List<Rental> rentals = rentalService.getAllRentals();
+        List<RentalResponse> rentalResponses = rentals.stream().map(this::convertToResponse).toList();
+        RentalListResponse response = new RentalListResponse(rentalResponses);
         return ResponseEntity.ok(response);
     }
 
@@ -49,8 +51,7 @@ public class RentalController {
     @Operation(summary = "Get a rental by ID")
     @GetMapping("/{id}")
     public ResponseEntity<RentalResponse> getRentalById(@PathVariable Long id) {
-        RentalResponse rental = rentalService.getRentalById(id);
-        return ResponseEntity.ok(rental);
+        return ResponseEntity.ok(convertToResponse(rentalService.getRentalById(id)));
     }
 
     /**
@@ -122,5 +123,24 @@ public class RentalController {
         rentalService.updateRental(id, request, user);
 
         return ResponseEntity.ok("{\"message\": \"Rental updated!\"}");
+    }
+
+    /**
+     * Convertit un objet Rental en objet RentalResponse.
+     * @param rental la location
+     * @return location convertie en objet RentalResponse
+     */
+    private RentalResponse convertToResponse(Rental rental) {
+        RentalResponse response = new RentalResponse();
+        response.setId(rental.getId());
+        response.setName(rental.getName());
+        response.setSurface(rental.getSurface());
+        response.setPrice(rental.getPrice());
+        response.setPicture(rental.getPicture());
+        response.setDescription(rental.getDescription());
+        response.setOwner_id(rental.getOwner().getId());
+        response.setCreated_at(rental.getCreated_at());
+        response.setUpdated_at(rental.getUpdated_at());
+        return response;
     }
 }

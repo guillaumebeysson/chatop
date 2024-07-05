@@ -1,7 +1,9 @@
 package com.openclassrooms.controller;
 
+import com.openclassrooms.dto.UserResponse;
 import com.openclassrooms.entity.User;
 import com.openclassrooms.repository.UserRepository;
+import com.openclassrooms.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * Récupère un utilisateur par son ID
@@ -26,8 +28,10 @@ public class UserController {
      */
     @Operation(summary = "Get a user by id")
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userRepository.findById(id).get());
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt(), user.getUpdatedAt());
+        return ResponseEntity.ok(userResponse);
     }
 
 }

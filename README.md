@@ -6,7 +6,9 @@ chatop is an application for managing vacation home reservations, offering users
 Angular
 
 ## The Back-end uses:
-Java Spring boot
+- Java 17
+- Spring boot 3.3.1
+- Maven 3.9.7
 
 ## Spring Boot starter dependency:
 Web, Security, DataJPA, Lombok, OAuth2Client, MySQLDriver
