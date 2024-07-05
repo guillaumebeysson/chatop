@@ -21,13 +21,13 @@ Getting started
 ### Back-end
 
 -   Clone the project: https://github.com/guillaumebeysson/chatop.git
--   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) in the directory : `/ChaTop`
+-   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) and open this project
 -   Run `mvn spring-boot:run` to launch the back-end in developpment mode
 
 ### Front-end
 
 -   Clone the project: https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring
--   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) in the directory : `/ChaTop`
+-   Open your IDE (IntelliJ, VS Code, Eclipse, etc.) and open this project
 -   Run `npm install` to install the dependencies
 -   Run `ng serve` to start the front-end development server
 -   To use the app, navigate to <http://localhost:4200/>
