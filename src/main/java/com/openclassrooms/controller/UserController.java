@@ -22,7 +22,7 @@ public class UserController {
     /**
      * Récupère un utilisateur par son ID
      * @param id ID de l'utilisateur
-     * @return utilisateur
+     * @return utilisateu
      */
     @Operation(summary = "Get a user by id")
     @GetMapping("/user/{id}")
