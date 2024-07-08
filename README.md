@@ -55,7 +55,7 @@ Ressources
 
 ### Swagger
 
-HTML documentation : <http://localhost:3001/api/swagger-ui/index.html>
+HTML documentation : <http://localhost:3001/swagger-ui/index.html>
 
 ### Mockoon
 

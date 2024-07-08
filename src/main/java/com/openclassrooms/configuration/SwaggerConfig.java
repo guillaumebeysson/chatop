@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    // Swagger link http://localhost:8080/swagger-ui/index.html
+    // Swagger link http://localhost:3001/swagger-ui/index.html
 
     /**
      * Configuration de l'API Swagger
